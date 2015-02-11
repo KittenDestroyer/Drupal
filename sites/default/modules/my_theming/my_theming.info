@@ -1,0 +1,10 @@
+;$Id$
+
+name = Theming
+description = Theming module.
+package = Drupal 7 Development
+core = 7.x
+files[] = my_theming.module
+
+;dependencies[] = autoload
+;php = 5.2

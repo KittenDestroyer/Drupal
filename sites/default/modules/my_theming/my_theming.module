@@ -1,0 +1,69 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ *
+ *
+ *
+ *
+ */
+
+/**
+ * Implements hook_help().
+ */
+function my_theming_help($path, $arg) {
+  if ($path == 'admin/help#my_theming') {
+    return t('Theming module.');
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function my_theming_menu() {
+  $items['theming'] = array(
+      'title' => 'Theming',
+      'page callback' => 'theming_page',
+      'access callback' => TRUE,
+    );
+
+  return $items;
+}
+
+/**
+ * Page callback for /theming.
+ */
+function theming_page() {
+  $text_one = 'This is text';
+  $text_two = 'Text two';
+  $text_three = 'Text three';
+  $function_one = theme('theming_function', array('text_one' => $text_one));
+  $function_two = theme_item_list(array('text_one' => $text_one, 'text_two' => $text_two, 'text_three' => $text_three));
+  $function_three = theme_fieldset(array('text_one' => $text_one, 'text_two' => $text_two, 'text_three' => $text_three));
+  $function_four = theme_table(array('text_one' => $text_one, 'text_two' => $text_two, 'text_three' => $text_three));
+  $function_five = theme_image_style(array('text_one' => $text_one, 'text_two' => $text_two, 'text_three' => $text_three));
+  return $function_two;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function my_theming_theme($existing, $type, $theme, $path) {
+  return array(
+    'theming_function' => array(
+      'variables' => array(
+        'text_one' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Theme function.
+ */
+function theme_theming_function($variables) {
+  $output = "<h2><strong>" . $variables['text_one'] . "</strong></h2>";
+  return $output;
+}
+?>
