@@ -25,6 +25,7 @@ function my_form_menu() {
   $items['contacts'] = array(
       'title' => 'Contacts',
       'page callback' => 'contact_page',
+      'page arguments' => array('my_form_form'),
       'access callback' => TRUE,
     );
 
@@ -43,10 +44,47 @@ function contact_page() {
  */
 function my_form_form($form, &$form_state) {
 
+  $form['username'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Your username'),
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#required' => TRUE,
+    );
+
+  $form['email'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Your E-mail'),
+      '#size' => 15,
+      '#maxlength' => 25,
+      '#required' => TRUE,
+    );
+
+  $form['phone'] = array(
+      '#type' => 'textfield',
+      '#title' => 'Your phone number',
+      '#size' => 15,
+      '#maxlength' => 15,
+    );
+
   $form['submit_button'] = array(
       '#type' => 'submit',
       '#value' => t('Push me baby!'),
     );
 
   return $form;
+}
+
+/**
+ * Implements hook_form_validate().
+ */
+function my_form_form_validate($form, &$form_state) {
+
+}
+
+/**
+ * Implements hook_form_submit().
+ */
+function my_from_form_submit($form, &$form_state) {
+
 }
