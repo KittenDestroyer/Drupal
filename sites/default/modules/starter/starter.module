@@ -98,7 +98,11 @@ function starter_block_view($block_name = '') {
     }
   }
   else {
-
+    $block = array(
+        'subject' => t('Enabled Modules'),
+        'content' => 'You don\'t have enough permission',
+      );
+    return $block;
   }
 }
 

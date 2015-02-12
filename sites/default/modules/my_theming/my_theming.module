@@ -35,15 +35,35 @@ function my_theming_menu() {
  * Page callback for /theming.
  */
 function theming_page() {
-  $text_one = 'This is text';
-  $text_two = 'Text two';
-  $text_three = 'Text three';
-  $function_one = theme('theming_function', array('text_one' => $text_one));
-  $function_two = theme_item_list(array('text_one' => $text_one, 'text_two' => $text_two, 'text_three' => $text_three));
-  $function_three = theme_fieldset(array('text_one' => $text_one, 'text_two' => $text_two, 'text_three' => $text_three));
-  $function_four = theme_table(array('text_one' => $text_one, 'text_two' => $text_two, 'text_three' => $text_three));
-  $function_five = theme_image_style(array('text_one' => $text_one, 'text_two' => $text_two, 'text_three' => $text_three));
-  return $function_two;
+  $text_one = 'What the hell';
+  $text_two = array(
+    array('data' => 'first'),
+    array('data' => 'second'),
+    array('data' => 'third'));
+  $text_three[] = array(
+    array('data' => 'apple'),
+    array('data' => 'orange'),
+    array('data' => 'pineapple'));
+  $text_four = array(
+      '#title' => 'Example fieldset',
+      '#children' => 'Hello!',
+    );
+
+  $function_one = theme('theming_template',
+    array(
+    '#theme' => 'theming_template',
+    '#type' => 'markup',
+    '#text_one' => $text_one,
+    ));
+  $function_two = theme('item_list',
+    array('items' => $text_two, 'type' => 'ol'));
+  $function_three = theme('table',
+    array('header' => $text_two, 'rows' => $text_three));
+  $function_four = theme('fieldset',
+    array('element' => $text_four));
+  $function_five = theme('image_style',
+    array('style_name' => 'form-preview', 'path' => 'public://Godfather.jpg'));
+  return $function_one . $function_two . $function_three . $function_four . $function_five;
 }
 
 /**
@@ -56,6 +76,12 @@ function my_theming_theme($existing, $type, $theme, $path) {
         'text_one' => NULL,
       ),
     ),
+    'theming_template' => array(
+      'variables' => array(
+        'text_one' => NULL,
+      ),
+      'template' => 'my_theming',
+    ),
   );
 }
 
@@ -66,4 +92,3 @@ function theme_theming_function($variables) {
   $output = "<h2><strong>" . $variables['text_one'] . "</strong></h2>";
   return $output;
 }
-?>

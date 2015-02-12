@@ -1,10 +1,10 @@
 ;$Id$
 
-name = Starter
-description = A first module.
+name = My form
+description = Form module.
 package = Drupal 7 Development
 core = 7.x
-files[] = starter.module
+files[] = my_form.module
 
 ;dependencies[] = autoload
 ;php = 5.2

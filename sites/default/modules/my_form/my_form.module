@@ -1,0 +1,52 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ *
+ *
+ *
+ *
+ */
+
+/**
+ * Implements hook_help().
+ */
+function my_form_help($path, $arg) {
+  if ($path == 'admin/help#my_form') {
+    return t('Form module');
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function my_form_menu() {
+  $items['contacts'] = array(
+      'title' => 'Contacts',
+      'page callback' => 'contact_page',
+      'access callback' => TRUE,
+    );
+
+  return $items;
+}
+
+/**
+ * Page callback for /contacts.
+ */
+function contact_page() {
+  return my_form_form();
+}
+
+/**
+ * Implements hook_form().
+ */
+function my_form_form($form, &$form_state) {
+
+  $form['submit_button'] = array(
+      '#type' => 'submit',
+      '#value' => t('Push me baby!'),
+    );
+
+  return $form;
+}
