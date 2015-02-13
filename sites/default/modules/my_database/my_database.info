@@ -1,0 +1,10 @@
+;$Id$
+
+name = My database
+description = Database module.
+package = Drupal 7 Development
+core = 7.x
+files[] = my_database.module
+
+;dependencies[] = autoload
+;php = 5.2

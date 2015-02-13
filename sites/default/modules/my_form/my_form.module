@@ -24,7 +24,7 @@ function my_form_help($path, $arg) {
 function my_form_menu() {
   $items['contacts'] = array(
       'title' => 'Contacts',
-      'page callback' => 'contact_page',
+      'page callback' => 'drupal_get_form',
       'page arguments' => array('my_form_form'),
       'access callback' => TRUE,
     );
@@ -43,6 +43,8 @@ function contact_page() {
  * Implements hook_form().
  */
 function my_form_form($form, &$form_state) {
+
+  $form = array();
 
   $form['username'] = array(
       '#type' => 'textfield',
@@ -67,6 +69,50 @@ function my_form_form($form, &$form_state) {
       '#maxlength' => 15,
     );
 
+  $form['gender'] = array(
+      '#type' => 'radios',
+      '#title' => t('Male or female?'),
+      '#options' => array(
+          t('Male'),
+          t('Female'),
+        ),
+      '#required'=>TRUE,
+      '#default_value' => 0,
+    );
+
+  $form['country'] = array(
+      '#type' => 'select',
+      '#title' => t('Country'),
+      '#options' => array(
+          t('Ukraine'),
+          t('USA'),
+          t('Russia'),
+        ),
+    );
+
+  $form['message'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Message'),
+      '#required' => TRUE,
+    );
+
+  $agreement = array(
+      '#title' => t('License agreement'),
+      '#children' => t('Some text of agreement'),
+    );
+
+  $fieldset = theme('fieldset', array('element' => $agreement));
+
+  $form['agreement'] = array(
+      '#markup' => $fieldset,
+    );
+
+  $form['terms'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('I agree'),
+      '#required' => TRUE,
+    );
+
   $form['submit_button'] = array(
       '#type' => 'submit',
       '#value' => t('Push me baby!'),
@@ -76,9 +122,25 @@ function my_form_form($form, &$form_state) {
 }
 
 /**
+ * Implements hook_form_alter().
+ */
+function my_form_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'my_form_form') {
+    $form['#validate'][] = 'my_form_form_validate';
+  }
+}
+
+/**
  * Implements hook_form_validate().
  */
 function my_form_form_validate($form, &$form_state) {
+  if (!valid_email_address($form_state['values']['email'])) {
+    form_set_error('email', t('Enter correct email please'));
+  }
+
+  if (!preg_match('/^[0-9\-\+]{9,15}$/',$form_state['values']['phone'])) {
+  form_set_error('phone', t('Enter correct phone number'));
+  }
 
 }
 
@@ -86,5 +148,5 @@ function my_form_form_validate($form, &$form_state) {
  * Implements hook_form_submit().
  */
 function my_from_form_submit($form, &$form_state) {
-
+  drupal_set_message('');
 }
